@@ -4,15 +4,10 @@ class button(SpriteActor):
         """
         A SpriteActor with some extra functionality that detects when a tuple of form (x,y) is within\nthe bounds of the image.
         Args:
-            image (str): an image in images/sprites/buttons
-            pos (tuple): where to put the center of the image
-            frame_width (int): The width of each frame in the sprite sheet.
-            frame_height (int): The height of each frame in the sprite sheet.
-            row_number (int): The row number (starting from 0) from which the frames will be extracted.
-            frame_count (int): The number of frames in the animation.
-            fps (int, optional): The number of frames per second for the animation. Defaults to 10.
-            transparent_color (tuple, optional): RGB color key for transparency. Defaults to (0, 0, 0).
-            scale (float, optional): the scale of the image...
+            sprite_instance (Sprite): The sprite instance to use for animation.
+            position (tuple, optional): Initial position of the actor. Defaults to `POS_TOPLEFT`.
+            anchor_point (tuple, optional): Anchor point of the actor. Defaults to `ANCHOR_CENTER`.
+            **kwargs: Additional arguments for the base Actor class.
         """
         # Debug prints
         # print(self.SpriteActor)
