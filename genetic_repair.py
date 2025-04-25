@@ -24,7 +24,9 @@ for item in to_remove:
     print(f"{item} ({type(item)}) removed from buttons: not a gui.button")
 
 def draw():
-    pass
+    screen.clear()
+    screen.fill("white")
+    pgone.SpriteActor(pgone.Sprite("bases.png",7,13,0,4,1),(WIDTH//2,HEIGHT//2)).draw()
 
 def update():
     pass
@@ -42,7 +44,10 @@ def on_mouse_move(pos):
 def on_key_down(key):
     if key == keys.F:  # Press 'F' to toggle fullscreen
         screen.surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+        WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h  # Fullscreen size
+
     elif key == keys.ESCAPE:  # Press 'ESC' to return to windowed mode
         screen.surface = pygame.display.set_mode((WIDTH, HEIGHT))
+        WIDTH, HEIGHT = 500, 500
 
 pgzrun.go()
