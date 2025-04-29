@@ -3,6 +3,7 @@ import pgzrun
 import save_load_manager
 import gui
 import pygame
+import molecular_genetics
 
 INIT_WIDTH = 600
 INIT_HEIGHT = 500
@@ -53,6 +54,9 @@ def draw():
     for nested_list in all_actors_list:
         for actor in nested_list:
             actor.draw()
+
+    dna = molecular_genetics.DNA("actggttatgtgatgtgctagtgggctat")
+    dna.draw([0, 0])
 
 def update():
     pass

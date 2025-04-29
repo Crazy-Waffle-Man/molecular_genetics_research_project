@@ -68,24 +68,24 @@ class DNA:
             #Turn over the complement strand
             sprite_actor.angle = 180
         
-        def draw(self, top_left_pos):
-            """
-            Draws the object's SpriteActors in a line.
-            Args: 
-                start_pos (tuple): the (x, y) to start drawing the dna strand at
-            """
-            initial_top_left_pos = top_left_pos
-            for index, nucleotide in enumerate(self.color_bases_main):
-                nucleotide.topleft = top_left_pos
-                nucleotide.draw()
-                self.letters_main[index].topleft = top_left_pos
-                self.letters_main[index].draw()
-                top_left_pos[0] += 7
-            top_left_pos = initial_top_left_pos
-            top_left_pos[1] += 9
-            for index, nucleotide in enumerate(self.color_bases_complement):
-                nucleotide.topleft = top_left_pos
-                nucleotide.draw()
-                self.letters_complement[index].topleft = top_left_pos
-                self.letters_complement[index].draw()
-                top_left_pos[0] += 7
+    def draw(self, top_left_pos):
+        """
+        Draws the object's SpriteActors in a line.
+        Args: 
+            start_pos (list of length 2): the (x, y) to start drawing the dna strand at
+        """
+        for index, nucleotide in enumerate(self.color_bases_main):
+            nucleotide.topleft = top_left_pos
+            nucleotide.draw()
+            self.letters_main[index].topleft = top_left_pos
+            self.letters_main[index].draw()
+            top_left_pos[0] += 7
+        for i in range(len(self.color_bases_main)):
+            top_left_pos[0] -= 7
+        top_left_pos[1] += 7
+        for index, nucleotide in enumerate(self.color_bases_complement):
+            nucleotide.topleft = top_left_pos
+            nucleotide.draw()
+            self.letters_complement[index].topleft = top_left_pos
+            self.letters_complement[index].draw()
+            top_left_pos[0] += 7
