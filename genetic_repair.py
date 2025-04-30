@@ -15,11 +15,14 @@ TITLE = "Exploration of Genetic Repair"
 save_load = save_load_manager.save_load_system("savedata","savedata")
 buttons = save_load.load_game_data(
         ["buttons.savedata"],
-        [[gui.button(pgone.Sprite("buttons/play_button.png", 32, 32, 0, 4, 5), (WIDTH//2, HEIGHT//2))]]
+        [[]]
     )
 
 all_actors_list = [buttons]
 blip = False
+taking_inputs = True
+input_string = ""
+alphabet_keys = [keys.A, keys.B, keys.C, keys.D, keys.E, keys.F, keys.G, keys.H, keys.I, keys.J, keys.K, keys.L, keys.M, keys.N, keys.O, keys.P, keys.Q, keys.R, keys.S, keys.T, keys.U, keys.V, keys.W, keys.X, keys.Y, keys.Z, keys.SPACE]
 
 #Prune all unwanted types from the list. Typed arrays are better sometimes.
 to_remove = []
@@ -50,13 +53,11 @@ def draw():
     screen.clear()
     screen.fill("yellow")
 
-    #Automatic draw order. Can be overridden if necessary by adding more draw statements afterward..
+    #Automatic draw order. Can be overridden if necessary by adding more draw statements afterward.
     for nested_list in all_actors_list:
         for actor in nested_list:
             actor.draw()
-
-    dna = molecular_genetics.DNA("actggttatgtgatgtgctagtgggctat")
-    dna.draw([0, 0])
+    screen.draw.text(input_string, centerx = WIDTH//2, centery = HEIGHT//2, owidth = 2)
 
 def update():
     pass
@@ -85,14 +86,170 @@ def on_mouse_move(pos):
                 button.image = button.image[:-10]+ ".png"
 
 def on_key_down(key):
-    global WIDTH, HEIGHT
-    if key == keys.F:  # Press 'F' to toggle fullscreen
+    global WIDTH, HEIGHT, input_string
+    if key == keys.F and not taking_inputs:  # Press 'F' to toggle fullscreen
         screen.surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
         WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h  # Fullscreen size
         update_pos(all_actors_list)
-
     elif key == keys.ESCAPE:  # Press 'ESC' to return to windowed mode
         screen.surface = pygame.display.set_mode((WIDTH, HEIGHT))
         WIDTH, HEIGHT = 500, 500
         update_pos(all_actors_list)
+    elif taking_inputs:
+        if key == keys.BACKSPACE:
+            input_string = input_string[:-1]
+        elif key in alphabet_keys:
+            input_string += log_input(key, ["a", "b"])
+
+def log_input(pressed_key, refuse = []):
+    """
+    Returns a lowercase string of the key that is pressed. \nTo be used in on_key_down(key)
+    Args:
+        key (int): the key that was pressed
+        refuse (list, optional): the list of characters for which to return an empty string
+    """
+    for index, item in enumerate(refuse):
+        if not isinstance(item, str):
+            raise TypeError(f"Invalid Type:\nrefuse[{index}] = {item} <-- this value should be a string.")
+        if len(item) != 1:
+            raise ValueError(f"String too long:\nrefuse[{index}] = {item} <-- this string should be a single character.")
+        if not item.isalpha():
+            raise ValueError(f"That's not a letter!\nrefuse[{index}] = {item} <-- this should be a letter of the English alphabet.")
+        item = item.lower()
+            
+    if pressed_key == keys.A:
+        if "a" not in refuse:
+            return "a"
+        else:
+            return ""
+    elif pressed_key == keys.B: 
+        if "b" not in refuse:
+            return "b"
+        else:
+            return ""
+    elif pressed_key == keys.C: 
+        if "c" not in refuse:
+            return "c"
+        else:
+            return ""
+    elif pressed_key == keys.D: 
+        if "d" not in refuse:
+            return "d"
+        else:
+            return ""
+    elif pressed_key == keys.E: 
+        if "e" not in refuse:
+            return "e"
+        else:
+            return ""
+    elif pressed_key == keys.F: 
+        if "f" not in refuse:
+            return "f"
+        else:
+            return ""
+    elif pressed_key == keys.G: 
+        if "g" not in refuse:
+            return "g"
+        else:
+            return ""
+    elif pressed_key == keys.H: 
+        if "h" not in refuse:
+            return "h"
+        else:
+            return ""
+    elif pressed_key == keys.I: 
+        if "i" not in refuse:
+            return "i"
+        else:
+            return ""
+    elif pressed_key == keys.J: 
+        if "j" not in refuse:
+            return "j"
+        else:
+            return ""
+    elif pressed_key == keys.K: 
+        if "k" not in refuse:
+            return "k"
+        else:
+            return ""
+    elif pressed_key == keys.L: 
+        if "l" not in refuse:
+            return "l"
+        else:
+            return ""
+    elif pressed_key == keys.M: 
+        if "m" not in refuse:
+            return "m"
+        else:
+            return ""
+    elif pressed_key == keys.N: 
+        if "n" not in refuse:
+            return "n"
+        else:
+            return ""
+    elif pressed_key == keys.O: 
+        if "o" not in refuse:
+            return "o"
+        else:
+            return ""
+    elif pressed_key == keys.P: 
+        if "p" not in refuse:
+            return "p"
+        else:
+            return ""
+    elif pressed_key == keys.Q: 
+        if "q" not in refuse:
+            return "q"
+        else:
+            return ""
+    elif pressed_key == keys.R: 
+        if "r" not in refuse:
+            return "r"
+        else:
+            return ""
+    elif pressed_key == keys.S: 
+        if "s" not in refuse:
+            return "s"
+        else:
+            return ""
+    elif pressed_key == keys.T: 
+        if "t" not in refuse:
+            return "t"
+        else:
+            return ""
+    elif pressed_key == keys.U: 
+        if "u" not in refuse:
+            return "u"
+        else:
+            return ""
+    elif pressed_key == keys.V: 
+        if "v" not in refuse:
+            return "v"
+        else:
+            return ""
+    elif pressed_key == keys.W: 
+        if "w" not in refuse:
+            return "w"
+        else:
+            return ""
+    elif pressed_key == keys.X: 
+        if "x" not in refuse:
+            return "x"
+        else:
+            return ""
+    elif pressed_key == keys.Y: 
+        if "y" not in refuse:
+            return "y"
+        else:
+            return ""
+    elif pressed_key == keys.Z: 
+        if "z" not in refuse:
+            return "z"
+        else:
+            return ""
+    elif pressed_key == keys.SPACE:
+        if " " not in refuse:
+            return " "
+        else:
+            return ""
 pgzrun.go()

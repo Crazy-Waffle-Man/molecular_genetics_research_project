@@ -4,8 +4,8 @@ class DNA:
         """
         A dna strand.
         Args:
-            main_strand (string): the strand that RNA polymerase reads
-            complement_strand (string, default 0): The other strand. \nThis is automatically defined from main_strand if not given.
+            main_strand (str): the strand that RNA polymerase reads
+            complement_strand (str, optional): The other strand. \nThis is automatically defined from main_strand if not given.
         """
         self.color_bases_main = []
         self.letters_main = []
@@ -67,7 +67,23 @@ class DNA:
         for sprite_actor in self.color_bases_complement:
             #Turn over the complement strand
             sprite_actor.angle = 180
-        
+    
+    def transcribe(self):
+        """
+        Returns an RNA object from self.main_strand
+        """
+        output = ""
+        for i in range(len(self.main_strand)):
+            if self.main_strand[i] == "a":
+                output += "t"
+            elif self.main_strand[i] == "u":
+                output += "a"
+            elif self.main_strand[i] == "c":
+                output += "g"
+            elif self.main_strand[i] == "g":
+                output += "c"
+        return RNA(output)
+
     def draw(self, top_left_pos):
         """
         Draws the object's SpriteActors in a line.
@@ -89,3 +105,16 @@ class DNA:
             self.letters_complement[index].topleft = top_left_pos
             self.letters_complement[index].draw()
             top_left_pos[0] += 7
+
+class RNA:
+    def __init__(self, strand):
+        """
+        An RNA strand.
+        Args: 
+            strand (str): The nucleotides. Raises a ValueError if it has stuff other than a, u, c, or g.
+        """
+        strand = strand.lower()
+        for i in range(len(strand)):
+            if strand[i] != "a" and strand[i] != "u" and strand[i] != "c" and strand[i] != "g":
+                raise ValueError("RNA strand has nucleotides other than A, U, C, and G")
+        self.strand = strand
