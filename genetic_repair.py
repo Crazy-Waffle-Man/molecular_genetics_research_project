@@ -20,7 +20,7 @@ buttons = save_load.load_game_data(
 
 all_actors_list = [buttons]
 blip = False
-taking_inputs = True
+taking_inputs = False
 input_string = ""
 alphabet_keys = [keys.A, keys.B, keys.C, keys.D, keys.E, keys.F, keys.G, keys.H, keys.I, keys.J, keys.K, keys.L, keys.M, keys.N, keys.O, keys.P, keys.Q, keys.R, keys.S, keys.T, keys.U, keys.V, keys.W, keys.X, keys.Y, keys.Z, keys.SPACE]
 
@@ -58,16 +58,19 @@ def draw():
         for actor in nested_list:
             actor.draw()
     screen.draw.text(input_string, centerx = WIDTH//2, centery = HEIGHT//2, owidth = 2)
+    molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").draw([10, 10])
+    molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").transcribe().draw([10, 40])
 
 def update():
     pass
 
 def on_mouse_down(pos):
+    global taking_inputs
     for button in buttons:
         if button.mouse_collision_bool(pos):
             match button.get_filename():
-                case "play_button_hover.png":
-                    print("Clicking play_button_hover")
+                case "buttons/play_button_hover.png":
+                    taking_inputs = True
 
 def on_mouse_move(pos):
     global blip
@@ -86,20 +89,23 @@ def on_mouse_move(pos):
                 button.image = button.image[:-10]+ ".png"
 
 def on_key_down(key):
-    global WIDTH, HEIGHT, input_string
-    if key == keys.F and not taking_inputs:  # Press 'F' to toggle fullscreen
-        screen.surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
-        WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h  # Fullscreen size
-        update_pos(all_actors_list)
-    elif key == keys.ESCAPE:  # Press 'ESC' to return to windowed mode
-        screen.surface = pygame.display.set_mode((WIDTH, HEIGHT))
-        WIDTH, HEIGHT = 500, 500
-        update_pos(all_actors_list)
-    elif taking_inputs:
-        if key == keys.BACKSPACE:
-            input_string = input_string[:-1]
-        elif key in alphabet_keys:
-            input_string += log_input(key, ["a", "b"])
+    global WIDTH, HEIGHT, input_string, taking_inputs
+    # if key == keys.F and not taking_inputs:  # Press 'F' to toggle fullscreen
+    #     screen.surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
+    #     WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h  # Fullscreen size
+    #     update_pos(all_actors_list)
+    # elif key == keys.ESCAPE:  # Press 'ESC' to return to windowed mode
+    #     screen.surface = pygame.display.set_mode((WIDTH, HEIGHT))
+    #     WIDTH, HEIGHT = 500, 500
+    #     update_pos(all_actors_list)
+    if taking_inputs:
+        if len(input_string) <= 50:
+            if key == keys.BACKSPACE:
+                input_string = input_string[:-1]
+            elif key in alphabet_keys:
+                input_string += log_input(key, ["a", "b"])
+        else:
+            taking_inputs = False
 
 def log_input(pressed_key, refuse = []):
     """

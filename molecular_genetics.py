@@ -41,29 +41,29 @@ class DNA:
         for base in self.main_strand:
             if base == "a":
                 self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 0, 1, 1)))
+                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
             elif base == "t":
                 self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 1, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 1, 1, 1)))
+                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 1, 1, 1)))
             elif base == "c":
                 self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 2, 1, 1)))
+                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
             elif base == "g":
                 self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 3, 1, 1)))
+                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
         for base in self.complement_strand:
             if base == "a":
                 self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 0, 1, 1)))
+                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
             elif base == "t":
                 self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 1, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 1, 1, 1)))
+                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 1, 1, 1)))
             elif base == "c":
                 self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 2, 1, 1)))
+                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
             elif base == "g":
                 self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcg.png", 7, 9, 3, 1, 1)))
+                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
         for sprite_actor in self.color_bases_complement:
             #Turn over the complement strand
             sprite_actor.angle = 180
@@ -75,8 +75,8 @@ class DNA:
         output = ""
         for i in range(len(self.main_strand)):
             if self.main_strand[i] == "a":
-                output += "t"
-            elif self.main_strand[i] == "u":
+                output += "u"
+            elif self.main_strand[i] == "t":
                 output += "a"
             elif self.main_strand[i] == "c":
                 output += "g"
@@ -93,7 +93,7 @@ class DNA:
         for index, nucleotide in enumerate(self.color_bases_main):
             nucleotide.topleft = top_left_pos
             nucleotide.draw()
-            self.letters_main[index].topleft = top_left_pos
+            self.letters_main[index].topleft = [top_left_pos[0], top_left_pos[1] - 1]
             self.letters_main[index].draw()
             top_left_pos[0] += 7
         for i in range(len(self.color_bases_main)):
@@ -118,3 +118,38 @@ class RNA:
             if strand[i] != "a" and strand[i] != "u" and strand[i] != "c" and strand[i] != "g":
                 raise ValueError("RNA strand has nucleotides other than A, U, C, and G")
         self.strand = strand
+        self.color_bases = []
+        self.letters = []
+        self.reload_renderer()
+    def draw(self, top_left_pos):
+        """
+        Draws the object's SpriteActors in a line.
+        Args: 
+            start_pos (list of length 2): the (x, y) to start drawing the dna strand at
+        """
+        for index, nucleotide in enumerate(self.color_bases):
+            nucleotide.topleft = top_left_pos
+            nucleotide.draw()
+            self.letters[index].topleft = top_left_pos
+            self.letters[index].draw()
+            top_left_pos[0] += 7
+    def reload_renderer(self):
+        """
+        Updates the object's attributes to contain the appropriate SpriteActors
+        """
+        self.color_bases = []
+        self.letters = []
+        #Create a SpriteActor of corresponding color
+        for base in self.strand:
+            if base == "a":
+                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
+                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
+            elif base == "u":
+                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 4, 1, 1)))
+                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 4, 1, 1)))
+            elif base == "c":
+                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
+                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
+            elif base == "g":
+                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
+                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
