@@ -30,7 +30,7 @@ buttons = [
 save_load.save_game_data([alphabet_keys], ["alphabet_keys"])
 all_actors_list = [buttons]
 blip = False
-taking_inputs = True
+taking_inputs = False
 input_string = ""
 
 #Prune all unwanted types from the list. Typed arrays are better sometimes.
@@ -49,7 +49,7 @@ def draw():
     screen.fill("yellow")
 
     #Automatic draw order. Can be overridden if necessary by adding more draw statements afterward.
-    if taking_inputs:
+    if not taking_inputs:
         buttons[0].draw()
     screen.draw.text(input_string, centerx = WIDTH//2, centery = HEIGHT//2, owidth = 2)
     molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").draw([10, 10])
@@ -63,8 +63,9 @@ def on_mouse_down(pos):
     for button in buttons:
         if button.mouse_collision_bool(pos):
             print(button.get_filename())
+            sounds.boop.play()
             match button.get_filename():
-                case "buttons/play_button_hover.png":
+                case "buttons/play_button.png":
                     taking_inputs = True
 
 def on_mouse_move(pos):
