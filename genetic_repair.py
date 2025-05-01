@@ -12,17 +12,26 @@ HEIGHT = INIT_HEIGHT
 TITLE = "Exploration of Genetic Repair"
 
 #Declare initial variables; we do this before the game loop starts because we don't want to use processing power to define these each frame.
-save_load = save_load_manager.save_load_system("savedata","savedata")
-buttons = save_load.load_game_data(
-        ["buttons.savedata"],
-        [[]]
+save_load = save_load_manager.save_load_system(".savedata", "savedata")
+alphabet_keys = save_load.load_game_data(
+        [
+            "alphabet_keys.savedata"
+            ],
+        [
+            [keys.A, keys.B, keys.C, keys.D, keys.E, keys.F, keys.G, keys.H, keys.I, keys.J, keys.K, keys.L, keys.M, keys.N, keys.O, keys.P, keys.Q, keys.R, keys.S, keys.T, keys.U, keys.V, keys.W, keys.X, keys.Y, keys.Z, keys.SPACE]
+            ]
     )
 
+#Buttons cannot be pickled.
+buttons = [
+    gui.button(pgone.Sprite("buttons/play_button.png",32,32,0,4,3),(WIDTH//2,HEIGHT//4))
+    ]
+
+save_load.save_game_data([alphabet_keys], ["alphabet_keys"])
 all_actors_list = [buttons]
 blip = False
-taking_inputs = False
+taking_inputs = True
 input_string = ""
-alphabet_keys = [keys.A, keys.B, keys.C, keys.D, keys.E, keys.F, keys.G, keys.H, keys.I, keys.J, keys.K, keys.L, keys.M, keys.N, keys.O, keys.P, keys.Q, keys.R, keys.S, keys.T, keys.U, keys.V, keys.W, keys.X, keys.Y, keys.Z, keys.SPACE]
 
 #Prune all unwanted types from the list. Typed arrays are better sometimes.
 to_remove = []
@@ -35,28 +44,13 @@ for item in to_remove:
 #Remove the to_remove list because it is no longer used after this
 del(to_remove)
 
-#Dynamically change the positions of all actors upon the change of screen size
-def update_pos(list):
-    """
-    Updates the position of items in [list], used when fullscreen
-    Args:
-        list (list): list of SpriteActors/Actors or their children classes
-    """
-    for nested_list in list:
-        for actor in nested_list:
-            actor.x_ratio = actor.x // INIT_WIDTH
-            actor.y_ratio = actor.y // INIT_HEIGHT
-            actor.x = actor.x_ratio * WIDTH
-            actor.y = actor.y_ratio * HEIGHT
-
 def draw():
     screen.clear()
     screen.fill("yellow")
 
     #Automatic draw order. Can be overridden if necessary by adding more draw statements afterward.
-    for nested_list in all_actors_list:
-        for actor in nested_list:
-            actor.draw()
+    if taking_inputs:
+        buttons[0].draw()
     screen.draw.text(input_string, centerx = WIDTH//2, centery = HEIGHT//2, owidth = 2)
     molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").draw([10, 10])
     molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").transcribe().draw([10, 40])
@@ -68,6 +62,7 @@ def on_mouse_down(pos):
     global taking_inputs
     for button in buttons:
         if button.mouse_collision_bool(pos):
+            print(button.get_filename())
             match button.get_filename():
                 case "buttons/play_button_hover.png":
                     taking_inputs = True
@@ -90,14 +85,6 @@ def on_mouse_move(pos):
 
 def on_key_down(key):
     global WIDTH, HEIGHT, input_string, taking_inputs
-    # if key == keys.F and not taking_inputs:  # Press 'F' to toggle fullscreen
-    #     screen.surface = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
-    #     WIDTH, HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h  # Fullscreen size
-    #     update_pos(all_actors_list)
-    # elif key == keys.ESCAPE:  # Press 'ESC' to return to windowed mode
-    #     screen.surface = pygame.display.set_mode((WIDTH, HEIGHT))
-    #     WIDTH, HEIGHT = 500, 500
-    #     update_pos(all_actors_list)
     if taking_inputs:
         if len(input_string) <= 50:
             if key == keys.BACKSPACE:

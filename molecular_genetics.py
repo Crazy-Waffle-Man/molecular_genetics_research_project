@@ -24,8 +24,10 @@ class DNA:
                     complement_strand += "g"
                 elif base_pair == "g":
                     complement_strand += "c"
+                elif base_pair == " ":
+                    complement_strand += " "
                 else:
-                    raise ValueError("Encountered error while reading self.main_strand:\nDNA strands must only contain base pairs a, t, c, and g.")
+                    raise ValueError("Encountered error while reading self.main_strand:\nDNA strands must only contain base pairs a, t, c, g, and space")
         self.complement_strand = complement_strand.lower()
         self.reload_renderer()
     
@@ -96,8 +98,7 @@ class DNA:
             self.letters_main[index].topleft = [top_left_pos[0], top_left_pos[1] - 1]
             self.letters_main[index].draw()
             top_left_pos[0] += 7
-        for i in range(len(self.color_bases_main)):
-            top_left_pos[0] -= 7
+        top_left_pos[0] -= 7 * len(self.color_bases_main)
         top_left_pos[1] += 7
         for index, nucleotide in enumerate(self.color_bases_complement):
             nucleotide.topleft = top_left_pos
