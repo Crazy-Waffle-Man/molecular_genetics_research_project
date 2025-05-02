@@ -24,14 +24,14 @@ alphabet_keys = save_load.load_game_data(
 
 #Buttons cannot be pickled.
 buttons = [
-    gui.button(pgone.Sprite("buttons/play_button.png",32,32,0,4,3),(WIDTH//2,HEIGHT//4))
+    gui.button(pgone.Sprite("buttons/input_start_button.png",32,32,0,4,3),(WIDTH//2,HEIGHT//4))
     ]
 
 save_load.save_game_data([alphabet_keys], ["alphabet_keys"])
-all_actors_list = [buttons]
 blip = False
 taking_inputs = False
 input_string = ""
+dna_strands = []
 
 #Prune all unwanted types from the list. Typed arrays are better sometimes.
 to_remove = []
@@ -46,14 +46,13 @@ del(to_remove)
 
 def draw():
     screen.clear()
-    screen.fill("yellow")
 
     #Automatic draw order. Can be overridden if necessary by adding more draw statements afterward.
     if not taking_inputs:
         buttons[0].draw()
+    for dna in dna_strands:
+        dna.draw([10,HEIGHT//2])
     screen.draw.text(input_string, centerx = WIDTH//2, centery = HEIGHT//2, owidth = 2)
-    molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").draw([10, 10])
-    molecular_genetics.DNA("atgctgtgcgatcgtatatataagtgtctgct").transcribe().draw([10, 40])
 
 def update():
     pass
@@ -65,7 +64,7 @@ def on_mouse_down(pos):
             print(button.get_filename())
             sounds.boop.play()
             match button.get_filename():
-                case "buttons/play_button.png":
+                case "buttons/input_start_button.png":
                     taking_inputs = True
 
 def on_mouse_move(pos):
@@ -73,16 +72,12 @@ def on_mouse_move(pos):
     for button in buttons:
         if button.mouse_collision_bool(pos):
             button.scale = 1.5
-            if button.image[-10:] != "_hover.png":
-                button.image = f"{button.image}"[0:-4]+"_hover.png"
             if not blip:
                 sounds.blip.play()
                 blip = True
         else:
             blip = False
             button.scale = 1.0
-            if button.image[-10:] == "_hover.png":
-                button.image = button.image[:-10]+ ".png"
 
 def on_key_down(key):
     global WIDTH, HEIGHT, input_string, taking_inputs
@@ -91,8 +86,10 @@ def on_key_down(key):
             if key == keys.BACKSPACE:
                 input_string = input_string[:-1]
             elif key in alphabet_keys:
-                input_string += log_input(key, ["a", "b"])
-        else:
+                input_string += log_input(key, ["b", "d", "e", "f", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "u", "v", "w", "x", "y", "z", " "])
+        elif len(input_string) > 50:
+            dna_strands.append(molecular_genetics.DNA(input_string))
+            input_string = ""
             taking_inputs = False
 
 def log_input(pressed_key, refuse = []):
@@ -107,7 +104,7 @@ def log_input(pressed_key, refuse = []):
             raise TypeError(f"Invalid Type:\nrefuse[{index}] = {item} <-- this value should be a string.")
         if len(item) != 1:
             raise ValueError(f"String too long:\nrefuse[{index}] = {item} <-- this string should be a single character.")
-        if not item.isalpha():
+        if not item.isalpha() and item != " ":
             raise ValueError(f"That's not a letter!\nrefuse[{index}] = {item} <-- this should be a letter of the English alphabet.")
         item = item.lower()
             
