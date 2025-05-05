@@ -33,7 +33,7 @@ class DNA:
     
     def reload_renderer(self):
         """
-        Updates the object's attributes to contain the appropriate SpriteActors
+        Updates the object's attributes to contain the appropriate SpriteActors. Chainable method.
         """
         self.color_bases_main = []
         self.letters_main = []
@@ -69,6 +69,7 @@ class DNA:
         for sprite_actor in self.color_bases_complement:
             #Turn over the complement strand
             sprite_actor.angle = 180
+        return self
     
     def transcribe(self):
         """
@@ -88,7 +89,7 @@ class DNA:
 
     def draw(self, top_left_pos):
         """
-        Draws the object's SpriteActors in a line.
+        Draws the object's SpriteActors in a line. Chainable method.
         Args: 
             start_pos (list of length 2): the (x, y) to start drawing the dna strand at
         """
@@ -106,6 +107,48 @@ class DNA:
             self.letters_complement[index].topleft = top_left_pos
             self.letters_complement[index].draw()
             top_left_pos[0] += 7
+        return self
+
+    def find_error_indices(self, start_index, stop_index):
+        """
+        Finds any errors between start and stop indices, inclusive of both values.
+        Chainable method.
+        """
+        to_return = []
+        for i in range(start_index, stop_index + 1):
+            if self.main_strand[i] == "a":
+                if self.complement_strand[i] != "t":
+                    to_return.append(i)
+            elif self.main_strand[i] == "t":
+                if self.complement_strand[i] != "a":
+                    to_return.append(i)
+            elif self.main_strand[i] == "c":
+                if self.complement_strand[i] != "g":
+                    to_return.append(i)
+            elif self.main_strand[i] == "g":
+                if self.complement_strand != "c":
+                    to_return.append(i)
+            else:
+                raise TypeError(f"Malformed {self}.main_strand[{i}] ({self.main_strand[i-2, i+2]}): Bases must contain a, t, c, or g")
+        return to_return
+    
+    def single_nucleotide_mismatch_repair(self, index):
+        match self.main_strand[index]:
+            case "a":
+                self.complement_strand[index] = "t"
+            case "t":
+                self.complement_strand[index] = "a"
+            case "c":
+                self.complement_strand[index] = "g"
+            case "g":
+                self.complement_strand[index] = "c"
+        return self
+
+
+
+
+
+
 
 class RNA:
     def __init__(self, strand):

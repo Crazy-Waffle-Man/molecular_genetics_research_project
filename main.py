@@ -24,7 +24,7 @@ alphabet_keys = save_load.load_game_data(
 
 #Buttons cannot be pickled.
 buttons = [
-    gui.button(pgone.Sprite("buttons/input_start_button.png",32,32,0,4,3),(WIDTH//2,HEIGHT//4))
+    gui.button(pgone.Sprite("buttons/input_start_button.png",32,32,0,4,3),(WIDTH//2,HEIGHT//4 - 500))
     ]
 
 save_load.save_game_data([alphabet_keys], ["alphabet_keys"])
@@ -82,12 +82,12 @@ def on_mouse_move(pos):
 def on_key_down(key):
     global WIDTH, HEIGHT, input_string, taking_inputs
     if taking_inputs:
-        if len(input_string) <= 50:
+        if len(input_string) <= 75:
             if key == keys.BACKSPACE:
                 input_string = input_string[:-1]
             elif key in alphabet_keys:
                 input_string += log_input(key, ["b", "d", "e", "f", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "u", "v", "w", "x", "y", "z", " "])
-        elif len(input_string) > 50:
+        elif len(input_string) > 75:
             dna_strands.append(molecular_genetics.DNA(input_string))
             input_string = ""
             taking_inputs = False
