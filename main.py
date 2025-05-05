@@ -1,8 +1,12 @@
+try:
+    import pgzrun
+    import pgzero
+except ModuleNotFoundError:
+    raise ModuleNotFoundError("Modules not found: \"pgzero\", \"pgzrun\"\nFix by running the following in the terminal: \"pip install pgzero\"")
+
 import pgone
-import pgzrun
 import save_load_manager
 import gui
-import pygame
 import molecular_genetics
 
 INIT_WIDTH = 600
@@ -12,6 +16,7 @@ HEIGHT = INIT_HEIGHT
 TITLE = "Exploration of Genetic Repair"
 
 #Declare initial variables; we do this before the game loop starts because we don't want to use processing power to define these each frame.
+logger = save_load_manager.save_load_system(".log", "logs")
 save_load = save_load_manager.save_load_system(".savedata", "savedata")
 alphabet_keys = save_load.load_game_data(
         [
