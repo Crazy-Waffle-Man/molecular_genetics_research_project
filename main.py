@@ -9,6 +9,19 @@ import save_load_manager
 import gui
 import molecular_genetics
 
+##########################################################################################
+#This section contiains variables present for testing purposes only. They will be removed.
+test_dna = molecular_genetics.DNA("tagagctatcgtggcatgtagcttgtgcta", "atctcgatagcaccttacatcgaacacgat")
+test_indices = test_dna.find_error_indices()
+print(test_indices)
+print(test_dna.main_strand)
+print(test_dna.complement_strand[0:test_indices[0]] + "\x1b[38;2;255;0;0m" + test_dna.complement_strand[test_indices[0]]+"\x1b[0m"+test_dna.complement_strand[test_indices[0] + 1:])
+print("Fixed version below:")
+test_dna.single_nucleotide_mismatch_repair(test_indices[0])
+print(test_dna.main_strand)
+print(test_dna.complement_strand[0:test_indices[0]] + "\x1b[38;2;0;255;0m" + test_dna.complement_strand[test_indices[0]]+"\x1b[0m"+test_dna.complement_strand[test_indices[0] + 1:])
+##########################################################################################
+
 INIT_WIDTH = 600
 INIT_HEIGHT = 500
 WIDTH = INIT_WIDTH
@@ -16,7 +29,6 @@ HEIGHT = INIT_HEIGHT
 TITLE = "Exploration of Genetic Repair"
 
 #Declare initial variables; we do this before the game loop starts because we don't want to use processing power to define these each frame.
-logger = save_load_manager.save_load_system(".log", "logs")
 save_load = save_load_manager.save_load_system(".savedata", "savedata")
 alphabet_keys = save_load.load_game_data(
         [
