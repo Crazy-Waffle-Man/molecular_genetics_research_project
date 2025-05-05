@@ -109,13 +109,13 @@ class DNA:
             top_left_pos[0] += 7
         return self
 
-    def find_error_indices(self, start_index, stop_index):
+    def find_error_indices(self) -> list:
         """
         Finds any errors between start and stop indices, inclusive of both values.
         Chainable method.
         """
         to_return = []
-        for i in range(start_index, stop_index + 1):
+        for i in range(len(self.main_strand)):
             if self.main_strand[i] == "a":
                 if self.complement_strand[i] != "t":
                     to_return.append(i)
@@ -126,22 +126,26 @@ class DNA:
                 if self.complement_strand[i] != "g":
                     to_return.append(i)
             elif self.main_strand[i] == "g":
-                if self.complement_strand != "c":
+                if self.complement_strand[i] != "c":
                     to_return.append(i)
             else:
                 raise TypeError(f"Malformed {self}.main_strand[{i}] ({self.main_strand[i-2, i+2]}): Bases must contain a, t, c, or g")
         return to_return
     
     def single_nucleotide_mismatch_repair(self, index):
+        complement_strand = list(self.complement_strand)
         match self.main_strand[index]:
             case "a":
-                self.complement_strand[index] = "t"
+                complement_strand[index] = "t"
             case "t":
-                self.complement_strand[index] = "a"
+                complement_strand[index] = "a"
             case "c":
-                self.complement_strand[index] = "g"
+                complement_strand[index] = "g"
             case "g":
-                self.complement_strand[index] = "c"
+                complement_strand[index] = "c"
+        self.complement_strand = ""
+        for i in complement_strand:
+            self.complement_strand += i
         return self
 
 
