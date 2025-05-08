@@ -2,7 +2,7 @@ try:
     import pgzrun
     import pgzero
 except ModuleNotFoundError:
-    raise ModuleNotFoundError("Modules not found: \"pgzero\", \"pgzrun\"\nFix by running the following in the terminal: \"pip install pgzero\"")
+    raise ModuleNotFoundError("Modules not found: \"pgzero\", \"pgzrun\"\nFix by running the following in the terminal: \x1b[38;2;0;255;255mpip install pgzero\x1b[0m")
 
 import pgone
 import save_load_manager
