@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SaveLoader {
@@ -42,6 +43,24 @@ public class SaveLoader {
         }
     }
 
+    public void saveDataReplace(String data, int lineNumber) {
+        //replace the data at a line with the data arg
+        String[] existingData = this.read();
+        this.clearData();
+        try {
+            for (int i = 0; i < existingData.length; i++) {
+                if (i == lineNumber) {
+                    this.saveDataAppend(data);
+                } else {
+                    this.saveDataAppend(existingData[i]);
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Error: Array index out of bounds.");
+        }
+    }
+
     public void clearData() {
         this.file.delete();
         try {
@@ -58,16 +77,19 @@ public class SaveLoader {
     public String[] read() {
         try {
             Scanner readScanner = new Scanner(this.file);
-            String output = "";
-            String[] file;
+            ArrayList<String> outputDynamicArray = new ArrayList<>();
             while (readScanner.hasNextLine()) {
-                readScanner.nextLine();
+                outputDynamicArray.add(readScanner.nextLine());
             }
             readScanner.close();
+            String[] output = outputDynamicArray.toArray(new String[0]);
             return output;
+
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             String[] badOutput = {"Encountered an error."};
+            return badOutput;
         }
     }
+}
