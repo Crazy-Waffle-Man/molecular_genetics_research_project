@@ -1,4 +1,4 @@
-from pgone import *
+from python_utils.pgone import *
 class button(SpriteActor):
     def mouse_collision_bool(self, mouse_pos):
         """
