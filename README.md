@@ -15,4 +15,4 @@ This project aims to illustrate different methods of genetic repair.
 | backspace | remove the last letter from the text onscreen |
 
 # Dependencies
-The file "genetic_repair.py" uses a few packages. They are dependencies of pygame zero, which is also used. Assuming you have python installed (with pip), run the following code in the terminal: `pip install pgzero`. All other dependencies are included.
+The file "genetic_repair.py" uses a few packages. They are dependencies of pygame zero, which is also used. Assuming you have python installed (with pip), run the following code in the terminal: `pip install pgzero`. All other dependencies are included. If you want to use the java config, install [Java 21.0.6](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) or higher.
