@@ -1,4 +1,4 @@
-import python_utils.pgone as pgone
+import pgone as pgone
 class DNA:
     def __init__(self, main_strand, complement_strand = 0):
         """
