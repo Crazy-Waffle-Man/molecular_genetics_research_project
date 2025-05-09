@@ -11,17 +11,24 @@ public class Main {
         while (running) {
             String input = scanner.nextLine();
             if (input.startsWith("configVars")) {
-                if (input.startsWith("configVars rendererToggle")) {
-                    if (saveLoader.read()[0] == "render: True") {
-                        saveLoader.saveDataReplace("render: False", 0);
-                    } else {
+                if (input.startsWith("render", 11)) {
+                    if (input.startsWith("True", 17)) {
                         saveLoader.saveDataReplace("render: True", 0);
+                    } else {
+                        saveLoader.saveDataReplace("render: False", 0);
                     }
-                    System.out.println("The renderer has been toggled.");
+                } else if (input.startsWith("print_output", 11)) {
+                    if (input.startsWith("True", 24)) {
+                        saveLoader.saveDataReplace("print_output: True", 1);
+                    } else {
+                        saveLoader.saveDataReplace("print_output: False", 1);
+                    }
                 }
-            }/* else if () {
+            } else if (input.startsWith("exit")) {
+                running = false;
             } else {
-            }*/
+                System.out.println("Malformed input: \""+ input+ "\" is not a recognized command.");
+            }
         }
         scanner.close();
     }

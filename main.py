@@ -4,10 +4,10 @@ try:
 except ModuleNotFoundError:
     raise ModuleNotFoundError("Modules not found: \"pgzero\", \"pgzrun\"\nFix by running the following in the terminal: \x1b[38;2;0;255;255mpip install pgzero\x1b[0m")
 
-import python_utils.pgone as pgone
-import python_utils.save_load_manager as save_load_manager
-import python_utils.gui as gui
-import python_utils.molecular_genetics as molecular_genetics
+import pgone as pgone
+import save_load_manager as save_load_manager
+import gui as gui
+import molecular_genetics as molecular_genetics
 
 ##########################################################################################
 #This section contiains variables present for testing purposes only. They will be removed.
