@@ -18,6 +18,7 @@ This project aims to illustrate different methods of genetic repair.
 | prompt | args | function |
 | - | - | - |
 | `configVars` | variable name in config_vars.config, value to set variable to | sets the variable to the given value |
+| `exit` | none | exits the program |
 
 
 
