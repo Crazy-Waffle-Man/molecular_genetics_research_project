@@ -2,7 +2,7 @@ import pgone as pgone
 class DNA:
     def __init__(self, main_strand, complement_strand = 0):
         """
-        A dna strand.
+        A dna strand. Capital letters for a base pair indicate that it is damaged.
         Args:
             main_strand (str): the strand that RNA polymerase reads
             complement_strand (str, optional): The other strand. \nThis is automatically defined from main_strand if not given.
@@ -12,23 +12,21 @@ class DNA:
         self.SpriteActors = []
         self.color_bases_complement = []
         self.letters_complement = []
-        self.main_strand = main_strand.lower()
         while not isinstance(complement_strand, str):
             complement_strand = ""
             for base_pair in self.main_strand:
-                if base_pair == "a":
+                if base_pair.lower() == "a":
                     complement_strand += "t"
-                elif base_pair == "t":
+                elif base_pair.lower() == "t":
                     complement_strand += "a"
-                elif base_pair == "c":
+                elif base_pair.lower() == "c":
                     complement_strand += "g"
-                elif base_pair == "g":
+                elif base_pair.lower() == "g":
                     complement_strand += "c"
-                elif base_pair == " ":
+                elif base_pair.lower() == " ":
                     complement_strand += " "
                 else:
                     raise ValueError("Encountered error while reading self.main_strand:\nDNA strands must only contain base pairs a, t, c, g, and space")
-        self.complement_strand = complement_strand.lower()
         self.reload_renderer()
     
     def reload_renderer(self):
@@ -116,22 +114,59 @@ class DNA:
         """
         to_return = []
         for i in range(len(self.main_strand)):
-            if self.main_strand[i] == "a":
-                if self.complement_strand[i] != "t":
+            match self.main_strand[i]:
+                case "a":
+                    if self.complement_strand[i] != "t":
+                        to_return.append(i)
+                case "t":
+                    if self.complement_strand[i] != "a":
+                        to_return.append(i)
+                case "c":
+                    if self.complement_strand[i] != "g":
+                        to_return.append(i)
+                case "g":
+                    if self.complement_strand[i] != "c":
+                        to_return.append(i)
+                case "A" | "T" | "C" | "G":
                     to_return.append(i)
-            elif self.main_strand[i] == "t":
-                if self.complement_strand[i] != "a":
-                    to_return.append(i)
-            elif self.main_strand[i] == "c":
-                if self.complement_strand[i] != "g":
-                    to_return.append(i)
-            elif self.main_strand[i] == "g":
-                if self.complement_strand[i] != "c":
-                    to_return.append(i)
-            else:
-                raise TypeError(f"Malformed {self}.main_strand[{i}] ({self.main_strand[i-2, i+2]}): Bases must contain a, t, c, or g")
+                case _:
+                    raise TypeError(f"Malformed {self}.main_strand[{i}] ({self.main_strand[i-2, i+2]}): Bases must contain a, t, c, or g")
+        for i in range(len(self.main_strand)):
+            if self.complement_strand[i] in ["A", "T", "C", "G"] or self.main_strand[i] in ["A", "T", "C", "G"]:
+                to_return.append(i)
         return to_return
     
+    def base_excision_repair(self, index):
+        main_pair = self.main_strand[index]
+        comp_pair = self.complement_strand[index]
+        if main_pair in ["A", "T", "C", "G"] and comp_pair in ["A", "T", "C", "G"]:
+            print("Oh dear, it does indeed seem that you have reached the point where both strands have damaged bases and are not valid for base excision repair")
+            return self
+        elif main_pair not in ["A", "T", "C", "G"] and comp_pair in ["A", "T", "C", "G"]:
+            match main_pair:
+                case "a":
+                    comp_pair = "t"
+                case "t":
+                    comp_pair = "a"
+                case "c":
+                    comp_pair = "g"
+                case "g":
+                    comp_pair = "c"
+        elif comp_pair not in ["A", "T", "C", "G"] and main_pair in ["A", "T", "C", "G"]:
+            match comp_pair:
+                case "a":
+                    main_pair = "t"
+                case "t":
+                    main_pair = "a"
+                case "c":
+                    main_pair = "g"
+                case "g":
+                    main_pair = "c"
+        else:
+            print("This DNA is just fine. Not at all a candidate for base excision repair.")
+            
+        
+
     def single_nucleotide_mismatch_repair(self, index):
         complement_strand = list(self.complement_strand)
         match self.main_strand[index]:
