@@ -15,18 +15,19 @@ class DNA:
         while not isinstance(complement_strand, str):
             complement_strand = ""
             for base_pair in self.main_strand:
-                if base_pair.lower() == "a":
-                    complement_strand += "t"
-                elif base_pair.lower() == "t":
-                    complement_strand += "a"
-                elif base_pair.lower() == "c":
-                    complement_strand += "g"
-                elif base_pair.lower() == "g":
-                    complement_strand += "c"
-                elif base_pair.lower() == " ":
-                    complement_strand += " "
-                else:
-                    raise ValueError("Encountered error while reading self.main_strand:\nDNA strands must only contain base pairs a, t, c, g, and space")
+                match base_pair.lower():
+                    case "a":
+                        complement_strand += "t"
+                    case "t":
+                        complement_strand += "a"
+                    case "c":
+                        complement_strand += "g"
+                    case "g":
+                        complement_strand += "c"
+                    case " ":
+                        complement_strand += " "
+                    case _:
+                        raise ValueError("Encountered error while reading self.main_strand:\nDNA strands must only contain base pairs a, t, c, g, and space")
         self.reload_renderer()
     
     def reload_renderer(self):
@@ -39,31 +40,33 @@ class DNA:
         self.letters_complement = []
         #Create a SpriteActor of corresponding color
         for base in self.main_strand:
-            if base == "a":
-                self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
-            elif base == "t":
-                self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 1, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 1, 1, 1)))
-            elif base == "c":
-                self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
-            elif base == "g":
-                self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
-                self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
+            match base:
+                case "a":
+                    self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
+                    self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
+                case "t":
+                    self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 1, 1, 1)))
+                    self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 1, 1, 1)))
+                case "c":
+                    self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
+                    self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
+                case "g":
+                    self.color_bases_main.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
+                    self.letters_main.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
         for base in self.complement_strand:
-            if base == "a":
-                self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
-            elif base == "t":
-                self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 1, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 1, 1, 1)))
-            elif base == "c":
-                self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
-            elif base == "g":
-                self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
-                self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
+            match base:
+                case "a":
+                    self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
+                    self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
+                case "t":
+                    self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 1, 1, 1)))
+                    self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 1, 1, 1)))
+                case "c":
+                    self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
+                    self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
+                case"g":
+                    self.color_bases_complement.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
+                    self.letters_complement.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
         for sprite_actor in self.color_bases_complement:
             #Turn over the complement strand
             sprite_actor.angle = 180
@@ -75,14 +78,15 @@ class DNA:
         """
         output = ""
         for i in range(len(self.main_strand)):
-            if self.main_strand[i] == "a":
-                output += "u"
-            elif self.main_strand[i] == "t":
-                output += "a"
-            elif self.main_strand[i] == "c":
-                output += "g"
-            elif self.main_strand[i] == "g":
-                output += "c"
+            match self.main_strand[i]:
+                case "a":
+                    output += "u"
+                case "t":
+                    output += "a"
+                case "c":
+                    output += "g"
+                case "g":
+                    output += "c"
         return RNA(output)
 
     def draw(self, top_left_pos):
@@ -224,15 +228,16 @@ class RNA:
         self.letters = []
         #Create a SpriteActor of corresponding color
         for base in self.strand:
-            if base == "a":
-                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
-                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
-            elif base == "u":
-                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 4, 1, 1)))
-                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 4, 1, 1)))
-            elif base == "c":
-                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
-                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
-            elif base == "g":
-                self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
-                self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))
+            match base:
+                case "a":
+                    self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 0, 1, 1)))
+                    self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 0, 1, 1)))
+                case "u":
+                    self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 4, 1, 1)))
+                    self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 4, 1, 1)))
+                case "c":
+                    self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 2, 1, 1)))
+                    self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 2, 1, 1)))
+                case "g":
+                    self.color_bases.append(pgone.SpriteActor(pgone.Sprite("bases.png", 7, 9, 3, 1, 1)))
+                    self.letters.append(pgone.SpriteActor(pgone.Sprite("atcgu.png", 7, 9, 3, 1, 1)))

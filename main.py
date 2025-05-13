@@ -124,140 +124,141 @@ def log_input(pressed_key, refuse = []):
         if not item.isalpha() and item != " ":
             raise ValueError(f"That's not a letter!\nrefuse[{index}] = {item} <-- this should be a letter of the English alphabet.")
         item = item.lower()
-            
-    if pressed_key == keys.A:
-        if "a" not in refuse:
-            return "a"
-        else:
-            return ""
-    elif pressed_key == keys.B: 
-        if "b" not in refuse:
-            return "b"
-        else:
-            return ""
-    elif pressed_key == keys.C: 
-        if "c" not in refuse:
-            return "c"
-        else:
-            return ""
-    elif pressed_key == keys.D: 
-        if "d" not in refuse:
-            return "d"
-        else:
-            return ""
-    elif pressed_key == keys.E: 
-        if "e" not in refuse:
-            return "e"
-        else:
-            return ""
-    elif pressed_key == keys.F: 
-        if "f" not in refuse:
-            return "f"
-        else:
-            return ""
-    elif pressed_key == keys.G: 
-        if "g" not in refuse:
-            return "g"
-        else:
-            return ""
-    elif pressed_key == keys.H: 
-        if "h" not in refuse:
-            return "h"
-        else:
-            return ""
-    elif pressed_key == keys.I: 
-        if "i" not in refuse:
-            return "i"
-        else:
-            return ""
-    elif pressed_key == keys.J: 
-        if "j" not in refuse:
-            return "j"
-        else:
-            return ""
-    elif pressed_key == keys.K: 
-        if "k" not in refuse:
-            return "k"
-        else:
-            return ""
-    elif pressed_key == keys.L: 
-        if "l" not in refuse:
-            return "l"
-        else:
-            return ""
-    elif pressed_key == keys.M: 
-        if "m" not in refuse:
-            return "m"
-        else:
-            return ""
-    elif pressed_key == keys.N: 
-        if "n" not in refuse:
-            return "n"
-        else:
-            return ""
-    elif pressed_key == keys.O: 
-        if "o" not in refuse:
-            return "o"
-        else:
-            return ""
-    elif pressed_key == keys.P: 
-        if "p" not in refuse:
-            return "p"
-        else:
-            return ""
-    elif pressed_key == keys.Q: 
-        if "q" not in refuse:
-            return "q"
-        else:
-            return ""
-    elif pressed_key == keys.R: 
-        if "r" not in refuse:
-            return "r"
-        else:
-            return ""
-    elif pressed_key == keys.S: 
-        if "s" not in refuse:
-            return "s"
-        else:
-            return ""
-    elif pressed_key == keys.T: 
-        if "t" not in refuse:
-            return "t"
-        else:
-            return ""
-    elif pressed_key == keys.U: 
-        if "u" not in refuse:
-            return "u"
-        else:
-            return ""
-    elif pressed_key == keys.V: 
-        if "v" not in refuse:
-            return "v"
-        else:
-            return ""
-    elif pressed_key == keys.W: 
-        if "w" not in refuse:
-            return "w"
-        else:
-            return ""
-    elif pressed_key == keys.X: 
-        if "x" not in refuse:
-            return "x"
-        else:
-            return ""
-    elif pressed_key == keys.Y: 
-        if "y" not in refuse:
-            return "y"
-        else:
-            return ""
-    elif pressed_key == keys.Z: 
-        if "z" not in refuse:
-            return "z"
-        else:
-            return ""
-    elif pressed_key == keys.SPACE:
-        if " " not in refuse:
-            return " "
-        else:
-            return ""
+    
+    match pressed_key:
+        case keys.A:
+            if "a" not in refuse:
+                return "a"
+            else:
+                return ""
+        case keys.B: 
+            if "b" not in refuse:
+                return "b"
+            else:
+                return ""
+        case keys.C: 
+            if "c" not in refuse:
+                return "c"
+            else:
+                return ""
+        case keys.D: 
+            if "d" not in refuse:
+                return "d"
+            else:
+                return ""
+        case keys.E: 
+            if "e" not in refuse:
+                return "e"
+            else:
+                return ""
+        case keys.F: 
+            if "f" not in refuse:
+                return "f"
+            else:
+                return ""
+        case keys.G: 
+            if "g" not in refuse:
+                return "g"
+            else:
+                return ""
+        case keys.H: 
+            if "h" not in refuse:
+                return "h"
+            else:
+                return ""
+        case keys.I: 
+            if "i" not in refuse:
+                return "i"
+            else:
+                return ""
+        case keys.J: 
+            if "j" not in refuse:
+                return "j"
+            else:
+                return ""
+        case keys.K: 
+            if "k" not in refuse:
+                return "k"
+            else:
+                return ""
+        case keys.L: 
+            if "l" not in refuse:
+                return "l"
+            else:
+                return ""
+        case keys.M: 
+            if "m" not in refuse:
+                return "m"
+            else:
+                return ""
+        case keys.N: 
+            if "n" not in refuse:
+                return "n"
+            else:
+                return ""
+        case keys.O: 
+            if "o" not in refuse:
+                return "o"
+            else:
+                return ""
+        case keys.P: 
+            if "p" not in refuse:
+                return "p"
+            else:
+                return ""
+        case keys.Q: 
+            if "q" not in refuse:
+                return "q"
+            else:
+                return ""
+        case keys.R: 
+            if "r" not in refuse:
+                return "r"
+            else:
+                return ""
+        case keys.S: 
+            if "s" not in refuse:
+                return "s"
+            else:
+                return ""
+        case keys.T: 
+            if "t" not in refuse:
+                return "t"
+            else:
+                return ""
+        case keys.U: 
+            if "u" not in refuse:
+                return "u"
+            else:
+                return ""
+        case keys.V: 
+            if "v" not in refuse:
+                return "v"
+            else:
+                return ""
+        case keys.W: 
+            if "w" not in refuse:
+                return "w"
+            else:
+                return ""
+        case keys.X: 
+            if "x" not in refuse:
+                return "x"
+            else:
+                return ""
+        case keys.Y: 
+            if "y" not in refuse:
+                return "y"
+            else:
+                return ""
+        case keys.Z: 
+            if "z" not in refuse:
+                return "z"
+            else:
+                return ""
+        case keys.SPACE:
+            if " " not in refuse:
+                return " "
+            else:
+                return ""
 pgzrun.go()
