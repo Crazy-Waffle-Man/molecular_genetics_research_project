@@ -1,26 +1,9 @@
 # Genetic Repair python project
-This project aims to illustrate different methods of genetic repair.
+This project aims to illustrate different methods of genetic repair. It is a set of two python classes that will determine if a damaged DNA strand even has a chance of being repaired, and also what it will be transcribed and translated to. This will help researchers to avoid using exensive reagents on genetic repair that doesn't have a chance of working by allowing them to do a rough simulation first.
 
----
-#### Controls
-| Key | function |
-| - | - |
-|f|fullscreen|
-|esc|exit fullscreen|
+It is compatible with Pygame zero, but if you don't want to render it, you only need molecular_genetics.py.
 
-| Temporary Controls | function |
-| - | - |
-| A-Z | Type the letters A-Z on the screen |
-| spacebar | Add a spacebar to the screen |
-| backspace | remove the last letter from the text onscreen |
-
-#### Command line prompts
-| prompt | args | function |
-| - | - | - |
-| `configVars` | variable name in config_vars.config, value to set variable to | sets the variable to the given value |
-| `exit` | none | exits the program |
-
-
+If you want to render, you need pgone.py and pygame zero. There are also images in images/sprites that are required.
 
 # Dependencies
-The file "genetic_repair.py" uses a few packages. They are dependencies of pygame zero, which is also used. Assuming you have python installed (with pip), run the following code in the terminal: `pip install pgzero`. All other dependencies are included. If you want to use the java config (optional but useful), install [Java 21.0.6](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) or higher.
+If you have pgone.py and you see a ModuleNotFoundError, that is probably because you don't have [pygame zero](https://pygame-zero.readthedocs.io/en/stable/installation.html) installed. 

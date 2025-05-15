@@ -1,0 +1,24 @@
+import pgzrun
+import molecular_genetics
+
+WIDTH = 500
+HEIGHT = 500
+TITLE = "Example with rendering"
+
+
+start_dna = molecular_genetics.DNA("agttgccgggcgggggtgggcccgtccggtttttctcaggggacgttgaaattctttttgtaacgggagtcgggagaggacggggcgtgccccgacgtgcgcgcgcgtcgtcctccccggcgctcctccacagctcgctggctcccgccgcggaaaggcgtcatgccgcccaaaaccccccgaaaaacggccgccaccgccgccgctgccgccgcggaacccccggcaccgccgccgccgccccctcctgaggaggacccagagcaggacagcggcccggaggacctgcctctcgtcagg", "tccacggcccgccccca     gcaggccaaaaagagtcccctgcaactttaataaaaacattgccctcagccctctcctgccccgcacggggctgcacgcgcgcgcagcaggaggggccgcgaggaggtgtcgagcgaccgagggcggcgcctttccgcagtacggcgggttttggggggctttttgccggcggtggcggcggcgacggcggcg     ggggccgtggcggcggcggcgggggaggactcctcctgggtctcgtcctgtcgccgggcctcctggacggagagcagtcc")
+
+errors = start_dna.find_error_indices()
+end_dna = molecular_genetics.DNA("agttgccgggcgggggtgggcccgtccggtttttctcaggggacgttgaaattctttttgtaacgggagtcgggagaggacggggcgtgccccgacgtgcgcgcgcgtcgtcctccccggcgctcctccacagctcgctggctcccgccgcggaaaggcgtcatgccgcccaaaaccccccgaaaaacggccgccaccgccgccgctgccgccgcggaacccccggcaccgccgccgccgccccctcctgaggaggacccagagcaggacagcggcccggaggacctgcctctcgtcagg", "tcaacggcccgccccctcccgcgcaggccaaaaagagtcccctgcaactttaataaaaacattgccctcagccctctcctgccccgcacggggctgcacgcgcgcgcagcaggaggggccgcgaggaggtgtcgagcgaccgagggcggcgcctttccgcagtacggcgggttttggggggctttttgccggcggtggcggcggcgacggcggcgccttgggggccgtggcggcggcggcgggggaggactcctcctgggtctcgtcctgtcgccgggcctcctggacggagagcagtcc")
+for e in errors:
+    end_dna.single_nucleotide_mismatch_repair(e)
+
+def draw():
+    start_dna.reload_renderer().draw([10,10])
+    end_dna.reload_renderer().draw([10,30])
+    
+def update():
+    #Anything you want to do to gamify it goes here
+    pass
+
+pgzrun.go()
